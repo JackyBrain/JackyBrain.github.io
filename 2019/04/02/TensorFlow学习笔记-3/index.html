@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jackybrain.github.io","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="使用**Neural Network反向传播算法**实现MNIST手写数字识别  TensorFlow实现Neural Network反向传播算法数据集前面有说，直接开始建立模型 不含隐层的神经网络, 输入层是784个神经元, 输出层是10个神经元1234567891011import tensorflow as tfimport numpy as npimport matplotlib.pypl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow学习笔记(3)">
+<meta property="og:url" content="https://jackybrain.github.io/2019/04/02/TensorFlow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-3/index.html">
+<meta property="og:site_name" content="JackyBrain">
+<meta property="og:description" content="使用**Neural Network反向传播算法**实现MNIST手写数字识别  TensorFlow实现Neural Network反向传播算法数据集前面有说，直接开始建立模型 不含隐层的神经网络, 输入层是784个神经元, 输出层是10个神经元1234567891011import tensorflow as tfimport numpy as npimport matplotlib.pypl">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-04-03T01:40:35.000Z">
+<meta property="article:modified_time" content="2019-04-02T16:26:59.021Z">
+<meta property="article:author" content="Jacky Zhang">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="TensorFlow">
+<meta property="article:tag" content="Gradient Descent">
+<meta property="article:tag" content="MNIST">
+<meta property="article:tag" content="Neural Network">
+<meta property="article:tag" content="Backforward">
+<meta property="article:tag" content="MATLAB">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jackybrain.github.io/2019/04/02/TensorFlow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>TensorFlow学习笔记(3) | JackyBrain</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JackyBrain</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">9</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jackybrain.github.io/2019/04/02/TensorFlow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jacky Zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackyBrain">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TensorFlow学习笔记(3)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-04-02 20:40:35 / Modified: 11:26:59" itemprop="dateCreated datePublished" datetime="2019-04-02T20:40:35-05:00">2019-04-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/Neural-Network/" itemprop="url" rel="index">
+                    <span itemprop="name">Neural Network</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center>使用**Neural Network反向传播算法**实现MNIST手写数字识别</center>
+
+<h2 id="TensorFlow实现Neural-Network反向传播算法"><a href="#TensorFlow实现Neural-Network反向传播算法" class="headerlink" title="TensorFlow实现Neural Network反向传播算法"></a>TensorFlow实现Neural Network反向传播算法</h2><p>数据集前面有说，直接开始建立模型</p>
+<h3 id="不含隐层的神经网络-输入层是784个神经元-输出层是10个神经元"><a href="#不含隐层的神经网络-输入层是784个神经元-输出层是10个神经元" class="headerlink" title="不含隐层的神经网络, 输入层是784个神经元, 输出层是10个神经元"></a>不含隐层的神经网络, 输入层是784个神经元, 输出层是10个神经元</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">"MNIST_data"</span>, one_hot=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">print(mnist.train.images.shape, mnist.train.labels.shape)</span><br><span class="line">print(mnist.test.images.shape, mnist.test.labels.shape)</span><br><span class="line">print(mnist.validation.images.shape, mnist.validation.labels.shape)</span><br><span class="line">batch_size = <span class="number">100</span></span><br><span class="line">n_batch =  mnist.train.num_examples  // batch_size</span><br></pre></td></tr></table></figure>
+<p>其实不含有隐藏层的就是多分类，和前面一样</p>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">x = tf.placeholder(tf.float32, [<span class="literal">None</span>,<span class="number">784</span>])</span><br><span class="line">y = tf.placeholder(tf.float32, [<span class="literal">None</span>,<span class="number">10</span>])</span><br><span class="line">W = tf.Variable(tf.zeros([<span class="number">784</span>,<span class="number">10</span>]))</span><br><span class="line">b = tf.Variable(tf.zeros([<span class="number">1</span>,<span class="number">10</span>])) </span><br><span class="line">prediction = tf.nn.softmax(tf.matmul(x,W)+b)</span><br><span class="line">loss = tf.reduce_mean(tf.square(y-prediction))</span><br><span class="line">train_step = tf.train.GradientDescentOptimizer(<span class="number">0.2</span>).minimize(loss)</span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">correct_prediction = tf.equal(tf.argmax(y,<span class="number">1</span>), tf.argmax(prediction,<span class="number">1</span>))</span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(correct_prediction,tf.float32))</span><br></pre></td></tr></table></figure>
+<p>开始训练</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run(init)</span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">200</span>):</span><br><span class="line">        <span class="keyword">for</span> batch <span class="keyword">in</span> range(n_batch):</span><br><span class="line">            batch_xs,batch_ys = mnist.train.next_batch(batch_size)</span><br><span class="line">            sess.run(train_step,feed_dict=&#123;x:batch_xs,y:batch_ys&#125;)</span><br><span class="line">        acc = sess.run(accuracy,feed_dict=&#123;x:mnist.test.images, y:mnist.test.labels&#125;) </span><br><span class="line">        <span class="keyword">print</span> (<span class="string">"Iter "</span> + str(epoch) + <span class="string">",Testing Accuracy "</span> + str(acc))</span><br></pre></td></tr></table></figure>
+<p>结果如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Iter 0,Testing Accuracy 0.8321</span><br><span class="line">Iter 1,Testing Accuracy 0.8702</span><br><span class="line">Iter 2,Testing Accuracy 0.8819</span><br><span class="line">Iter 3,Testing Accuracy 0.8879</span><br><span class="line">Iter 4,Testing Accuracy 0.8941</span><br><span class="line">Iter 5,Testing Accuracy 0.8965</span><br><span class="line">Iter 6,Testing Accuracy 0.9006</span><br><span class="line">Iter 7,Testing Accuracy 0.9024</span><br><span class="line">Iter 8,Testing Accuracy 0.9043</span><br><span class="line">Iter 9,Testing Accuracy 0.905</span><br><span class="line">...</span><br><span class="line">Iter 190,Testing Accuracy 0.9288</span><br><span class="line">Iter 191,Testing Accuracy 0.9289</span><br><span class="line">Iter 192,Testing Accuracy 0.9291</span><br><span class="line">Iter 193,Testing Accuracy 0.929</span><br><span class="line">Iter 194,Testing Accuracy 0.9289</span><br><span class="line">Iter 195,Testing Accuracy 0.929</span><br><span class="line">Iter 196,Testing Accuracy 0.9287</span><br><span class="line">Iter 197,Testing Accuracy 0.9291</span><br><span class="line">Iter 198,Testing Accuracy 0.9291</span><br><span class="line">Iter 199,Testing Accuracy 0.9292</span><br></pre></td></tr></table></figure>
+<p>Accuracy达到了92%以上。</p>
+<h3 id="含一个隐层的神经网络"><a href="#含一个隐层的神经网络" class="headerlink" title="含一个隐层的神经网络"></a>含一个隐层的神经网络</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">"MNIST_data"</span>, one_hot=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">print(mnist.train.images.shape, mnist.train.labels.shape)</span><br><span class="line">print(mnist.test.images.shape, mnist.test.labels.shape)</span><br><span class="line">print(mnist.validation.images.shape, mnist.validation.labels.shape)</span><br><span class="line">batch_size = <span class="number">100</span></span><br><span class="line">n_batch =  mnist.train.num_examples // batch_size</span><br><span class="line">x = tf.placeholder(tf.float32, [<span class="literal">None</span>,<span class="number">784</span>])</span><br><span class="line">y = tf.placeholder(tf.float32, [<span class="literal">None</span>,<span class="number">10</span>])</span><br></pre></td></tr></table></figure>
+<p>下面的模型构建有所区别</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Weights_L1 = tf.Variable(tf.random_normal([<span class="number">784</span>,<span class="number">100</span>], stddev=<span class="number">0.1</span>))</span><br><span class="line">biase_L1 = tf.Variable(tf.zeros([<span class="number">1</span>,<span class="number">100</span>])) </span><br><span class="line">Wx_plus_b_L1 = tf.matmul(x, Weights_L1)+biase_L1 </span><br><span class="line">L1 = tf.nn.sigmoid(Wx_plus_b_L1)</span><br><span class="line"></span><br><span class="line">Weights_L2 = tf.Variable(tf.random_normal([<span class="number">100</span>,<span class="number">100</span>], stddev=<span class="number">0.1</span>))</span><br><span class="line">biase_L2 = tf.Variable(tf.zeros([<span class="number">1</span>,<span class="number">100</span>])) </span><br><span class="line">Wx_plus_b_L2 = tf.matmul(L1, Weights_L2)+biase_L2 </span><br><span class="line">L2 = tf.nn.sigmoid(Wx_plus_b_L2)</span><br><span class="line"></span><br><span class="line">Weights_L3 = tf.Variable(tf.random_normal([<span class="number">100</span>,<span class="number">10</span>], stddev=<span class="number">0.1</span>))</span><br><span class="line">biase_L3 = tf.Variable(tf.zeros([<span class="number">1</span>,<span class="number">10</span>]))</span><br><span class="line">Wx_plus_b_L3 = tf.matmul(L2,Weights_L3) + biase_L3</span><br><span class="line">prediction = tf.nn.sigmoid(Wx_plus_b_L3)</span><br><span class="line"></span><br><span class="line">loss = tf.reduce_mean(tf.square(y-prediction))</span><br><span class="line">train_step = tf.train.GradientDescentOptimizer(<span class="number">0.2</span>).minimize(loss)</span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">correct_prediction = tf.equal(tf.argmax(y,<span class="number">1</span>), tf.argmax(prediction,<span class="number">1</span>))</span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(correct_prediction,tf.float32))</span><br></pre></td></tr></table></figure>
+<p>值得注意的是<code>Weights_L1</code>,<code>Weights_L2</code>,<code>Weights_L3</code>,使用正态分布初始化时，<code>stddev</code>不能太大。</p>
+<p>开始训练</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run(init)</span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">200</span>): </span><br><span class="line">        <span class="keyword">for</span> batch <span class="keyword">in</span> range(n_batch):             </span><br><span class="line">            batch_xs,batch_ys = mnist.train.next_batch(batch_size)</span><br><span class="line">            sess.run(train_step,feed_dict=&#123;x:batch_xs,y:batch_ys&#125;)</span><br><span class="line">        acc = sess.run(accuracy,feed_dict=&#123;x:mnist.test.images, y:mnist.test.labels&#125;) </span><br><span class="line">        <span class="keyword">print</span> (<span class="string">"Iter "</span> + str(epoch) + <span class="string">",Testing Accuracy "</span> + str(acc))</span><br></pre></td></tr></table></figure>
+<p>结果如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">Iter 0,Testing Accuracy 0.1198</span><br><span class="line">Iter 1,Testing Accuracy 0.2264</span><br><span class="line">Iter 2,Testing Accuracy 0.2752</span><br><span class="line">Iter 3,Testing Accuracy 0.2504</span><br><span class="line">Iter 4,Testing Accuracy 0.3793</span><br><span class="line">Iter 5,Testing Accuracy 0.3175</span><br><span class="line">Iter 6,Testing Accuracy 0.3746</span><br><span class="line">Iter 7,Testing Accuracy 0.4038</span><br><span class="line">Iter 8,Testing Accuracy 0.4134</span><br><span class="line">Iter 9,Testing Accuracy 0.4354</span><br><span class="line">Iter 10,Testing Accuracy 0.4994</span><br><span class="line">Iter 11,Testing Accuracy 0.5342</span><br><span class="line">Iter 12,Testing Accuracy 0.5724</span><br><span class="line">Iter 13,Testing Accuracy 0.6077</span><br><span class="line">Iter 14,Testing Accuracy 0.6575</span><br><span class="line">Iter 15,Testing Accuracy 0.6749</span><br><span class="line">Iter 16,Testing Accuracy 0.7026</span><br><span class="line">Iter 17,Testing Accuracy 0.7267</span><br><span class="line">Iter 18,Testing Accuracy 0.7541</span><br><span class="line">Iter 19,Testing Accuracy 0.7596</span><br><span class="line">Iter 20,Testing Accuracy 0.7759</span><br><span class="line">Iter 21,Testing Accuracy 0.7895</span><br><span class="line">Iter 22,Testing Accuracy 0.8028</span><br><span class="line">...</span><br><span class="line">Iter 190,Testing Accuracy 0.94</span><br><span class="line">Iter 191,Testing Accuracy 0.9401</span><br><span class="line">Iter 192,Testing Accuracy 0.9399</span><br><span class="line">Iter 193,Testing Accuracy 0.9399</span><br><span class="line">Iter 194,Testing Accuracy 0.9404</span><br><span class="line">Iter 195,Testing Accuracy 0.9406</span><br><span class="line">Iter 196,Testing Accuracy 0.9401</span><br><span class="line">Iter 197,Testing Accuracy 0.9409</span><br><span class="line">Iter 198,Testing Accuracy 0.941</span><br><span class="line">Iter 199,Testing Accuracy 0.9408</span><br></pre></td></tr></table></figure>
+<p>Accuracy达到了94%以上，比上一个模型好一些。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>在<code>TensorFlow</code>框架下有许多很方便的函数，但是对于初学者来说，在<code>MATLAB</code>中将这些算法实现一遍有利于掌握反向传播机制。</p>
+<h2 id="MATLAB实现Neural-Network反向传播算法"><a href="#MATLAB实现Neural-Network反向传播算法" class="headerlink" title="MATLAB实现Neural Network反向传播算法"></a>MATLAB实现Neural Network反向传播算法</h2><center>以下内容参考Coursera上Machine Learning课后习题</center>
+
+<h3 id="设置参数"><a href="#设置参数" class="headerlink" title="设置参数"></a>设置参数</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">input_layer_size  = <span class="number">400</span>;  <span class="comment">% 20x20 Input Images of Digits</span></span><br><span class="line">hidden_layer_size = <span class="number">25</span>;   <span class="comment">% 25 hidden units</span></span><br><span class="line">num_labels = <span class="number">10</span>;          <span class="comment">% 10 labels, from 1 to 10  </span></span><br><span class="line">lambda = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>数据是20*20的，隐层有25个神经元，10个类。<br><code>lambda</code>是正则化参数。</p>
+<h3 id="Load-Training-Data"><a href="#Load-Training-Data" class="headerlink" title="Load Training Data"></a>Load Training Data</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">load(<span class="string">'ex4data1.mat'</span>);</span><br><span class="line">m = <span class="built_in">size</span>(X, <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="定义CostFunction"><a href="#定义CostFunction" class="headerlink" title="定义CostFunction"></a>定义CostFunction</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[J grad]</span> = <span class="title">nnCostFunction</span><span class="params">(nn_params, ...</span></span></span><br><span class="line"><span class="function"><span class="params">                                   input_layer_size, ...</span></span></span><br><span class="line"><span class="function"><span class="params">                                   hidden_layer_size, ...</span></span></span><br><span class="line"><span class="function"><span class="params">                                   num_labels, ...</span></span></span><br><span class="line"><span class="function"><span class="params">                                   X, y, lambda)</span></span></span><br><span class="line"></span><br><span class="line">Theta1 = <span class="built_in">reshape</span>(nn_params(<span class="number">1</span>:hidden_layer_size * (input_layer_size + <span class="number">1</span>)), ...</span><br><span class="line">                 hidden_layer_size, (input_layer_size + <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">Theta2 = <span class="built_in">reshape</span>(nn_params((<span class="number">1</span> + (hidden_layer_size * (input_layer_size + <span class="number">1</span>))):<span class="keyword">end</span>), ...</span><br><span class="line">                 num_labels, (hidden_layer_size + <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">% Setup some useful variables</span></span><br><span class="line">m = <span class="built_in">size</span>(X, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">J = <span class="number">0</span>;</span><br><span class="line">Theta1_grad = <span class="built_in">zeros</span>(<span class="built_in">size</span>(Theta1));</span><br><span class="line">Theta2_grad = <span class="built_in">zeros</span>(<span class="built_in">size</span>(Theta2));</span><br><span class="line"></span><br><span class="line">a1 = [<span class="built_in">ones</span>(<span class="built_in">size</span>(X,<span class="number">1</span>),<span class="number">1</span>) X];</span><br><span class="line">z2 = a1*Theta1';</span><br><span class="line">a2 = sigmoid(z2);</span><br><span class="line">a2 = [<span class="built_in">ones</span>(<span class="built_in">size</span>(a2,<span class="number">1</span>),<span class="number">1</span>) a2];</span><br><span class="line">z3 = Theta2*a2';</span><br><span class="line">a3 = sigmoid(z3);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> k = <span class="number">1</span>:num_labels</span><br><span class="line">    J = J - <span class="built_in">log</span>(a3(k,:))*(y==k) - <span class="built_in">log</span>(<span class="number">1</span>-a3(k,:))*(<span class="number">1</span>-(y==k));</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">SumSquare1 = sum(Theta1.^<span class="number">2</span>);</span><br><span class="line">SumSquare2 = sum(Theta2.^<span class="number">2</span>);</span><br><span class="line">J = J + (sum(SumSquare1(<span class="number">2</span>:<span class="keyword">end</span>)) + sum(SumSquare2(<span class="number">2</span>:<span class="keyword">end</span>))) * lambda / <span class="number">2</span>;</span><br><span class="line">J = J / m;</span><br><span class="line"></span><br><span class="line"><span class="comment">% backforward</span></span><br><span class="line">EYE = <span class="built_in">eye</span>(num_labels);</span><br><span class="line">y = EYE(:, y);</span><br><span class="line">delta3 = a3 - y;</span><br><span class="line">delta2 = Theta2(:,<span class="number">2</span>:<span class="keyword">end</span>)' * delta3 .* sigmoidGradient(z2)';</span><br><span class="line">Delta1 = delta2 * a1;</span><br><span class="line">Delta2 = delta3 * a2;</span><br><span class="line"></span><br><span class="line">Theta1(:,<span class="number">1</span>)=<span class="number">0</span>;</span><br><span class="line">Theta2(:,<span class="number">1</span>)=<span class="number">0</span>;</span><br><span class="line">Theta1_grad = Delta1 / m + lambda * Theta1 / m;</span><br><span class="line">Theta2_grad = Delta2 / m + lambda * Theta2 / m;</span><br><span class="line"></span><br><span class="line"><span class="comment">% Unroll gradients</span></span><br><span class="line">grad = [Theta1_grad(:) ; Theta2_grad(:)];</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h3 id="Training-NN"><a href="#Training-NN" class="headerlink" title="Training NN"></a>Training NN</h3><h4 id="先初始化需要学习的参数"><a href="#先初始化需要学习的参数" class="headerlink" title="先初始化需要学习的参数"></a>先初始化需要学习的参数</h4><p>Initializing Neural Network Parameters</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">W</span> = <span class="title">randInitializeWeights</span><span class="params">(L_in, L_out)</span></span></span><br><span class="line">W = <span class="built_in">zeros</span>(L_out, <span class="number">1</span> + L_in);</span><br><span class="line"></span><br><span class="line">epsilon_init = <span class="number">0.12</span>;</span><br><span class="line">W = <span class="built_in">rand</span>(L_out,<span class="number">1</span> + L_in) * <span class="number">2</span> * epsilon_init - epsilon_init;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);</span><br><span class="line">initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);</span><br><span class="line"></span><br><span class="line"><span class="comment">% Unroll parameters</span></span><br><span class="line">initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];</span><br></pre></td></tr></table></figure>
+<p>这里需要注意初始化的目的是为了防止<code>参数同步</code>。<br>初始化完毕。</p>
+<h4 id="开始训练"><a href="#开始训练" class="headerlink" title="开始训练"></a>开始训练</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">fprintf(<span class="string">'\nTraining Neural Network... \n'</span>)</span><br><span class="line"></span><br><span class="line">options = optimset(<span class="string">'MaxIter'</span>, <span class="number">50</span>);</span><br><span class="line"></span><br><span class="line">lambda = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">% Create "short hand" for the cost function to be minimized</span></span><br><span class="line">costFunction = @(p) nnCostFunction(p, ...</span><br><span class="line">                                   input_layer_size, ...</span><br><span class="line">                                   hidden_layer_size, ...</span><br><span class="line">                                   num_labels, X, y, lambda);</span><br><span class="line"></span><br><span class="line">[nn_params, cost] = fmincg(costFunction, initial_nn_params, options);</span><br><span class="line"></span><br><span class="line"><span class="comment">% Obtain Theta1 and Theta2 back from nn_params</span></span><br><span class="line">Theta1 = <span class="built_in">reshape</span>(nn_params(<span class="number">1</span>:hidden_layer_size * (input_layer_size + <span class="number">1</span>)), ...</span><br><span class="line">                 hidden_layer_size, (input_layer_size + <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">Theta2 = <span class="built_in">reshape</span>(nn_params((<span class="number">1</span> + (hidden_layer_size * (input_layer_size + <span class="number">1</span>))):<span class="keyword">end</span>), ...</span><br><span class="line">                 num_labels, (hidden_layer_size + <span class="number">1</span>));</span><br></pre></td></tr></table></figure>
+<h4 id="Implement-Predict"><a href="#Implement-Predict" class="headerlink" title="Implement Predict"></a>Implement Predict</h4><p>定义PredictFunction</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">p</span> = <span class="title">predict</span><span class="params">(Theta1, Theta2, X)</span></span></span><br><span class="line"><span class="comment">% Useful values</span></span><br><span class="line">m = <span class="built_in">size</span>(X, <span class="number">1</span>);</span><br><span class="line">num_labels = <span class="built_in">size</span>(Theta2, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">p = <span class="built_in">zeros</span>(<span class="built_in">size</span>(X, <span class="number">1</span>), <span class="number">1</span>);</span><br><span class="line">h1 = sigmoid([<span class="built_in">ones</span>(m, <span class="number">1</span>) X] * Theta1');</span><br><span class="line">h2 = sigmoid([<span class="built_in">ones</span>(m, <span class="number">1</span>) h1] * Theta2');</span><br><span class="line">[dummy, p] = <span class="built_in">max</span>(h2, [], <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pred = predict(Theta1, Theta2, X);</span><br><span class="line"></span><br><span class="line">fprintf(<span class="string">'\nTraining Set Accuracy: %f\n'</span>, <span class="built_in">mean</span>(double(pred == y)) * <span class="number">100</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="全篇总结"><a href="#全篇总结" class="headerlink" title="全篇总结"></a>全篇总结</h2><ol>
+<li>神经网络算法非常的灵活，激励函数多变，这里仅仅展示了一小部分。但是其中<code>隐层的个数</code>，每个隐层的<code>神经元个数</code>如何确定我仍然不解。</li>
+<li>隐层的每个神经元是否有实际的数学意义？</li>
+<li>所谓<code>反向传播</code>，其本质是多元微积分的<code>链式法则</code>的应用。</li>
+<li>如何判定<code>CostFunction</code>一定有局部最小值？（这一部分的问题或许不在机器学习的范畴之中了吧…）</li>
+<li>(疑问很多，不胜枚举)</li>
+</ol>
+<p>P.S.: 多推倒推倒数学公式还是很有益处的，计划下一篇写一些证明，顺便学习一下怎么在<code>Markdown</code>中插入<code>数学公式</code>!</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/TensorFlow/" rel="tag"># TensorFlow</a>
+              <a href="/tags/Gradient-Descent/" rel="tag"># Gradient Descent</a>
+              <a href="/tags/MNIST/" rel="tag"># MNIST</a>
+              <a href="/tags/Neural-Network/" rel="tag"># Neural Network</a>
+              <a href="/tags/Backforward/" rel="tag"># Backforward</a>
+              <a href="/tags/MATLAB/" rel="tag"># MATLAB</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/04/01/TensorFlow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-2/" rel="prev" title="TensorFlow学习笔记(2)">
+      <i class="fa fa-chevron-left"></i> TensorFlow学习笔记(2)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/04/09/Kaggle%E5%85%A5%E9%97%A8-1-Titanic/" rel="next" title="Kaggle入门(1)--Titanic">
+      Kaggle入门(1)--Titanic <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TensorFlow实现Neural-Network反向传播算法"><span class="nav-number">1.</span> <span class="nav-text">TensorFlow实现Neural Network反向传播算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不含隐层的神经网络-输入层是784个神经元-输出层是10个神经元"><span class="nav-number">1.1.</span> <span class="nav-text">不含隐层的神经网络, 输入层是784个神经元, 输出层是10个神经元</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#含一个隐层的神经网络"><span class="nav-number">1.2.</span> <span class="nav-text">含一个隐层的神经网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MATLAB实现Neural-Network反向传播算法"><span class="nav-number">2.</span> <span class="nav-text">MATLAB实现Neural Network反向传播算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置参数"><span class="nav-number">2.1.</span> <span class="nav-text">设置参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Load-Training-Data"><span class="nav-number">2.2.</span> <span class="nav-text">Load Training Data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义CostFunction"><span class="nav-number">2.3.</span> <span class="nav-text">定义CostFunction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Training-NN"><span class="nav-number">2.4.</span> <span class="nav-text">Training NN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#先初始化需要学习的参数"><span class="nav-number">2.4.1.</span> <span class="nav-text">先初始化需要学习的参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开始训练"><span class="nav-number">2.4.2.</span> <span class="nav-text">开始训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Implement-Predict"><span class="nav-number">2.4.3.</span> <span class="nav-text">Implement Predict</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全篇总结"><span class="nav-number">3.</span> <span class="nav-text">全篇总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jacky Zhang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:JackyBrain@outlook.com" title="E-Mail → mailto:JackyBrain@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jacky</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.1
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'fd0c2da15420e68efc55',
+      clientSecret: '19b67a1ecac899320e2ef0d40f4349ad0560798e',
+      repo        : 'JackyBrainComments',
+      owner       : 'JackyBrain',
+      admin       : ['JackyBrain'],
+      id          : '2e105b75146c279b4abfeb2d2e656d2f',
+        language: '',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

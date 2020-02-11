@@ -110,17 +110,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">2</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">17</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">1</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">6</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">3</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">9</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -296,6 +296,554 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jackybrain.github.io/2019/04/09/Kaggle%E5%85%A5%E9%97%A8-1-Titanic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jacky Zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackyBrain">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/09/Kaggle%E5%85%A5%E9%97%A8-1-Titanic/" class="post-title-link" itemprop="url">Kaggle入门(1)--Titanic</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-09 23:01:44" itemprop="dateCreated datePublished" datetime="2019-04-09T23:01:44-05:00">2019-04-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-04-10 01:37:30" itemprop="dateModified" datetime="2019-04-10T01:37:30-05:00">2019-04-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/Data-Mining/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Mining</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><code>Kaggle</code>是一个举办机器学习竞赛、托管数据库、编写和分享代码的平台。在这里可以学到很多数据科学的相关知识以及知识落地。</p>
+<p>本次数据挖掘的目的是<code>给出泰坦尼克号上的乘客的信息, 预测乘客是否幸存</code></p>
+<center>本文参考自 https://cloud.tencent.com/developer/article/1063994 </center>
+
+<h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><p>数据来源 : <code>https://www.kaggle.com/c/titanic/data</code><br>平台 : Python<br>涉及到的库 : <code>sklearn</code>, <code>numpy</code>, <code>seaborn</code>, <code>pandas</code>, …</p>
+<h2 id="数据获取方法"><a href="#数据获取方法" class="headerlink" title="数据获取方法"></a>数据获取方法</h2><h3 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h3><p>网页下载，解压。</p>
+<h3 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h3><p>使用<code>kaggle api</code>, <code>Github</code>地址<code>https://github.com/Kaggle/kaggle-api</code><br>安装方法 : <code>pip install kaggle</code><br>使用方法 : <code>kaggle competitions download -c titanic</code></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/04/09/Kaggle%E5%85%A5%E9%97%A8-1-Titanic/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jackybrain.github.io/2019/04/02/TensorFlow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jacky Zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackyBrain">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/02/TensorFlow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-3/" class="post-title-link" itemprop="url">TensorFlow学习笔记(3)</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-04-02 20:40:35 / Modified: 11:26:59" itemprop="dateCreated datePublished" datetime="2019-04-02T20:40:35-05:00">2019-04-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/Neural-Network/" itemprop="url" rel="index">
+                    <span itemprop="name">Neural Network</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <center>使用**Neural Network反向传播算法**实现MNIST手写数字识别</center>
+
+<h2 id="TensorFlow实现Neural-Network反向传播算法"><a href="#TensorFlow实现Neural-Network反向传播算法" class="headerlink" title="TensorFlow实现Neural Network反向传播算法"></a>TensorFlow实现Neural Network反向传播算法</h2><p>数据集前面有说，直接开始建立模型</p>
+<h3 id="不含隐层的神经网络-输入层是784个神经元-输出层是10个神经元"><a href="#不含隐层的神经网络-输入层是784个神经元-输出层是10个神经元" class="headerlink" title="不含隐层的神经网络, 输入层是784个神经元, 输出层是10个神经元"></a>不含隐层的神经网络, 输入层是784个神经元, 输出层是10个神经元</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">"MNIST_data"</span>, one_hot=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">print(mnist.train.images.shape, mnist.train.labels.shape)</span><br><span class="line">print(mnist.test.images.shape, mnist.test.labels.shape)</span><br><span class="line">print(mnist.validation.images.shape, mnist.validation.labels.shape)</span><br><span class="line">batch_size = <span class="number">100</span></span><br><span class="line">n_batch =  mnist.train.num_examples  // batch_size</span><br></pre></td></tr></table></figure>
+<p>其实不含有隐藏层的就是多分类，和前面一样</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/04/02/TensorFlow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-3/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jackybrain.github.io/2019/04/01/TensorFlow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jacky Zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackyBrain">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/01/TensorFlow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-2/" class="post-title-link" itemprop="url">TensorFlow学习笔记(2)</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-01 20:39:24" itemprop="dateCreated datePublished" datetime="2019-04-01T20:39:24-05:00">2019-04-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-04-02 07:42:01" itemprop="dateModified" datetime="2019-04-02T07:42:01-05:00">2019-04-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <center>使用**Logistic Regression**实现MNIST手写数字识别</center>
+
+<h2 id="下载MNIST数据集"><a href="#下载MNIST数据集" class="headerlink" title="下载MNIST数据集"></a>下载MNIST数据集</h2><p>TensorFlow提供了一个<code>input_data.py</code>的文件专门用于下载mnist数据。调用方法代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line"></span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">"MNIST_data"</span>, one_hot=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">print(mnist.train.images.shape, mnist.train.labels.shape)</span><br><span class="line">print(mnist.test.images.shape, mnist.test.labels.shape)</span><br><span class="line">print(mnist.validation.images.shape, mnist.validation.labels.shape)</span><br></pre></td></tr></table></figure>
+
+<h2 id="预览一下数据的格式"><a href="#预览一下数据的格式" class="headerlink" title="预览一下数据的格式"></a>预览一下数据的格式</h2><p>trainset是(55000, 784)的，对28*28的图片进行了拉直操作。<br>具体可视化方式如下</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/04/01/TensorFlow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-2/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jackybrain.github.io/2019/03/28/TensorFlow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jacky Zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackyBrain">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/28/TensorFlow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">TensorFlow学习笔记</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-28 23:01:13" itemprop="dateCreated datePublished" datetime="2019-03-28T23:01:13-05:00">2019-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-04-02 04:15:59" itemprop="dateModified" datetime="2019-04-02T04:15:59-05:00">2019-04-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/Neural-Network/" itemprop="url" rel="index">
+                    <span itemprop="name">Neural Network</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近在Coursera上学的 <strong>Machine Learning</strong>正好讲到<strong>Neural Network</strong></p>
+<h2 id="使用TensorFlow-学习神经网络"><a href="#使用TensorFlow-学习神经网络" class="headerlink" title="使用TensorFlow 学习神经网络"></a>使用TensorFlow 学习神经网络</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>使用<strong>张量Tensor</strong>和<strong>算子Operator</strong>构建<strong>流Flow</strong><br>然后使用<strong>会话Session</strong>计算<br>意思就是说，主要分两步进行。第一步是构建Flow，第二步是执行Flow。<br>很简单，开干。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="初始化权重矩阵"><a href="#初始化权重矩阵" class="headerlink" title="初始化权重矩阵"></a>初始化权重矩阵</h4><p>这里初始化了(2,3)和(3,1)的两个矩阵，其中里面的元素全部随机服从标准差为1，mean=0的正态分布。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">w1 = tf.Variable(tf.random_normal((<span class="number">2</span>,<span class="number">3</span>), stddev=<span class="number">1</span>, seed=<span class="number">1</span>))</span><br><span class="line">w2 = tf.Variable(tf.random_normal((<span class="number">3</span>,<span class="number">1</span>), stddev=<span class="number">1</span>, seed=<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+<h4 id="构建Flow"><a href="#构建Flow" class="headerlink" title="构建Flow"></a>构建Flow</h4><p>很简单的前向传播模型，看代码就懂。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x = tf.constant([[<span class="number">0.7</span>, <span class="number">0.9</span>]])</span><br><span class="line">a = tf.matmul(x, w1)</span><br><span class="line">y = tf.matmul(a, w2)</span><br></pre></td></tr></table></figure>
+<h4 id="创建Session"><a href="#创建Session" class="headerlink" title="创建Session"></a>创建Session</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br><span class="line">sess.run(w1.initializer)</span><br><span class="line">sess.run(w2.initializer)</span><br><span class="line">print(sess.run(y))</span><br><span class="line">sess.close()</span><br></pre></td></tr></table></figure>
+<p>记得关闭Session，释放资源。</p>
+<h4 id="全局初始化"><a href="#全局初始化" class="headerlink" title="全局初始化"></a>全局初始化</h4><p>在Flow比较复杂的时候，神经元依赖关系复杂，使用全局初始化函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">init_op = tf.global_variables_initializer()</span><br><span class="line">sess.run(init_op)</span><br></pre></td></tr></table></figure>
+<p>这个函数可以自动处理变量之间依赖关系。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/03/28/TensorFlow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jackybrain.github.io/2019/03/24/%E7%88%AC%E8%99%AB%E6%8A%93%E5%8F%96%E8%AF%81%E5%88%B8%E6%97%B6%E6%8A%A5%E5%86%85%E5%AE%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jacky Zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackyBrain">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/24/%E7%88%AC%E8%99%AB%E6%8A%93%E5%8F%96%E8%AF%81%E5%88%B8%E6%97%B6%E6%8A%A5%E5%86%85%E5%AE%B9/" class="post-title-link" itemprop="url">爬虫抓取证券时报内容</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-24 22:10:23" itemprop="dateCreated datePublished" datetime="2019-03-24T22:10:23-05:00">2019-03-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-04-01 04:33:57" itemprop="dateModified" datetime="2019-04-01T04:33:57-05:00">2019-04-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>本次目标是抓取<a href="http://epaper.stcn.com" target="_blank" rel="noopener">证券时报电子报</a>往期内容并整理分类，为后面的数据分析做准备。</p>
+<h3 id="准备工具"><a href="#准备工具" class="headerlink" title="准备工具"></a>准备工具</h3><p>Safari Develop mode, Python, Jupyter Notebook</p>
+<h3 id="代码如下"><a href="#代码如下" class="headerlink" title="代码如下"></a>代码如下</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Init</span></span><br><span class="line"><span class="keyword">import</span> urllib.parse</span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">year = <span class="number">2019</span></span><br><span class="line">month = <span class="number">3</span></span><br><span class="line">day = <span class="number">23</span></span><br><span class="line"></span><br><span class="line">user_agent = <span class="string">'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'</span></span><br><span class="line">headers = &#123; <span class="string">'User-Agent'</span> : user_agent &#125;</span><br><span class="line">data = <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Generate DateString</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">DateStr</span><span class="params">(year, month, day)</span>:</span></span><br><span class="line">    Date = str(year) + <span class="string">'-'</span></span><br><span class="line">    <span class="keyword">if</span> month &lt; <span class="number">10</span>:</span><br><span class="line">        Date = Date + <span class="string">'0'</span> + str(month)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        Date = Date + str(month)</span><br><span class="line">    Date = Date + <span class="string">'/'</span></span><br><span class="line">    <span class="keyword">if</span> day &lt; <span class="number">10</span>:</span><br><span class="line">        Date = Date + <span class="string">'0'</span> + str(day)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        Date = Date + str(day)</span><br><span class="line">    <span class="keyword">return</span> Date</span><br></pre></td></tr></table></figure>
+
+<pre><code>2019-03/24</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Generate yyyy-mm-dd URL</span></span><br><span class="line"><span class="comment"># URL = GenURL(Date)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GenURL</span><span class="params">(Date)</span>:</span></span><br><span class="line">    url = <span class="string">'http://epaper.stcn.com/paper/zqsb/html/'</span>+ Date + <span class="string">'/node_2.htm'</span></span><br><span class="line">    <span class="keyword">return</span> url</span><br></pre></td></tr></table></figure>
+
+<pre><code>http://epaper.stcn.com/paper/zqsb/html/2019-03/24/node_2.htm</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># content = GetContent(URL)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GetContent</span><span class="params">(url)</span>:</span></span><br><span class="line">    req = urllib.request.Request(url, data, headers)</span><br><span class="line">    response = urllib.request.urlopen(req)</span><br><span class="line">    content = response.read().decode(<span class="string">'utf-8'</span>)</span><br><span class="line">    <span class="keyword">return</span> content</span><br></pre></td></tr></table></figure>
+
+<pre><code>&lt;script&gt;
+window.location=&quot;/paper/zqsb/html/epaper/index/index.htm&quot;;
+&lt;/script&gt;
+
+http://epaper.stcn.com/paper/zqsb/html/2019-03/24/node_2.htm</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Analysis the paper</span></span><br><span class="line"><span class="comment"># PaperContent = GetPaper(content)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GetPaper</span><span class="params">(content)</span>:</span></span><br><span class="line">    _soup = BeautifulSoup(content, <span class="string">"html.parser"</span>)</span><br><span class="line">    founder_content = _soup.find(<span class="string">"founder-content"</span>)</span><br><span class="line">    Paper = <span class="string">''</span></span><br><span class="line">    <span class="keyword">for</span> paper <span class="keyword">in</span> founder_content.find_all(<span class="string">"p"</span>):</span><br><span class="line">        <span class="keyword">if</span> paper.string != <span class="literal">None</span>:</span><br><span class="line">            Paper = Paper + paper.string</span><br><span class="line">    <span class="keyword">return</span> Paper</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Get Paper Link List</span></span><br><span class="line"><span class="comment"># URL = GenURL(year, month, day)</span></span><br><span class="line"><span class="comment"># content = GetContent(URL)</span></span><br><span class="line"><span class="comment"># LinkList = GetLink(URL, content)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GetLink</span><span class="params">(url, content)</span>:</span></span><br><span class="line">    LinkList = []</span><br><span class="line">    soup = BeautifulSoup(content, <span class="string">"html.parser"</span>)</span><br><span class="line">    url = url[:<span class="number">50</span>]</span><br><span class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> soup.find_all(<span class="string">"a"</span>,href=re.compile(<span class="string">"^content"</span>)):</span><br><span class="line">        PaperURL = url + link.get(<span class="string">'href'</span>)</span><br><span class="line">        LinkList.append(PaperURL)</span><br><span class="line">    <span class="keyword">return</span> LinkList</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Work</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GetAllArticles</span><span class="params">(year, month, day)</span>:</span></span><br><span class="line">    Date = DateStr(year, month, day)</span><br><span class="line">    URL = GenURL(Date) <span class="comment"># Generate yyyy-mm-dd Home Page</span></span><br><span class="line">    HomePageContent = GetContent(URL) <span class="comment"># Get the Content of the Home Page</span></span><br><span class="line">    LinkList = GetLink(URL, HomePageContent) <span class="comment"># Get the PaperLink from the Home Page</span></span><br><span class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> LinkList:</span><br><span class="line">        PaperContent = GetContent(link) <span class="comment"># Get the PaperContent from the link</span></span><br><span class="line">        PaperText = GetPaper(PaperContent) <span class="comment"># Convert PaperContent to PaperText</span></span><br><span class="line">        Date = Date.replace(<span class="string">'/'</span>,<span class="string">'-'</span>)</span><br><span class="line">        FileName = Date + <span class="string">'.txt'</span></span><br><span class="line">        f = open(FileName, <span class="string">'a+'</span>)</span><br><span class="line">        f.write(<span class="string">"Time : %s\n"</span> % time.ctime())</span><br><span class="line">        f.write(PaperText)</span><br><span class="line">        f.write(<span class="string">'\n'</span>)</span><br><span class="line">        f.close()</span><br><span class="line">        time.sleep(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GetAllArticles(year, month, day)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jackybrain.github.io/2019/03/22/mac%E4%B8%8BSpark%E7%9A%84%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jacky Zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackyBrain">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/22/mac%E4%B8%8BSpark%E7%9A%84%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">macOS下Spark的安装</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-03-22 21:44:37 / Modified: 09:55:08" itemprop="dateCreated datePublished" datetime="2019-03-22T21:44:37-05:00">2019-03-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spark/" itemprop="url" rel="index">
+                    <span itemprop="name">Spark</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近参与了一个研究经济政策不确定性对股市波动影响的项目，里面对于新闻文本需要用到NLP，而且是海量文本。正好最近在投各大厂的简历，数据分析相关的岗位都要求熟悉Spark，时间有点紧，火烧眉毛了，那就来学一学。</p>
+<p><strong>就不介绍啥是Spark了，直接上干货</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/03/22/mac%E4%B8%8BSpark%E7%9A%84%E5%AE%89%E8%A3%85/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="https://jackybrain.github.io/2019/03/22/Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -439,16 +987,16 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

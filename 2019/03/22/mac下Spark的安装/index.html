@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jackybrain.github.io","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="最近参与了一个研究经济政策不确定性对股市波动影响的项目，里面对于新闻文本需要用到NLP，而且是海量文本。正好最近在投各大厂的简历，数据分析相关的岗位都要求熟悉Spark，时间有点紧，火烧眉毛了，那就来学一学。 就不介绍啥是Spark了，直接上干货">
+<meta property="og:type" content="article">
+<meta property="og:title" content="macOS下Spark的安装">
+<meta property="og:url" content="https://jackybrain.github.io/2019/03/22/mac%E4%B8%8BSpark%E7%9A%84%E5%AE%89%E8%A3%85/index.html">
+<meta property="og:site_name" content="JackyBrain">
+<meta property="og:description" content="最近参与了一个研究经济政策不确定性对股市波动影响的项目，里面对于新闻文本需要用到NLP，而且是海量文本。正好最近在投各大厂的简历，数据分析相关的岗位都要求熟悉Spark，时间有点紧，火烧眉毛了，那就来学一学。 就不介绍啥是Spark了，直接上干货">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://jackybrain.github.io/2019/03/22/mac%E4%B8%8BSpark%E7%9A%84%E5%AE%89%E8%A3%85/mac%E4%B8%8BSpark%E7%9A%84%E5%AE%89%E8%A3%85/1.png">
+<meta property="og:image" content="https://jackybrain.github.io/2019/03/22/mac%E4%B8%8BSpark%E7%9A%84%E5%AE%89%E8%A3%85/mac%E4%B8%8BSpark%E7%9A%84%E5%AE%89%E8%A3%85/2.png">
+<meta property="article:published_time" content="2019-03-23T02:44:37.000Z">
+<meta property="article:modified_time" content="2019-03-22T14:55:08.149Z">
+<meta property="article:author" content="Jacky Zhang">
+<meta property="article:tag" content="Spark">
+<meta property="article:tag" content="scala">
+<meta property="article:tag" content="macOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jackybrain.github.io/2019/03/22/mac%E4%B8%8BSpark%E7%9A%84%E5%AE%89%E8%A3%85/mac%E4%B8%8BSpark%E7%9A%84%E5%AE%89%E8%A3%85/1.png">
+
+<link rel="canonical" href="https://jackybrain.github.io/2019/03/22/mac%E4%B8%8BSpark%E7%9A%84%E5%AE%89%E8%A3%85/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>macOS下Spark的安装 | JackyBrain</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JackyBrain</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">9</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jackybrain.github.io/2019/03/22/mac%E4%B8%8BSpark%E7%9A%84%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jacky Zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackyBrain">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          macOS下Spark的安装
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-03-22 21:44:37 / Modified: 09:55:08" itemprop="dateCreated datePublished" datetime="2019-03-22T21:44:37-05:00">2019-03-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spark/" itemprop="url" rel="index">
+                    <span itemprop="name">Spark</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最近参与了一个研究经济政策不确定性对股市波动影响的项目，里面对于新闻文本需要用到NLP，而且是海量文本。正好最近在投各大厂的简历，数据分析相关的岗位都要求熟悉Spark，时间有点紧，火烧眉毛了，那就来学一学。</p>
+<p><strong>就不介绍啥是Spark了，直接上干货</strong></p>
+<a id="more"></a>
+<h2 id="Spark的安装"><a href="#Spark的安装" class="headerlink" title="Spark的安装"></a>Spark的安装</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>macOS有一点非常的好，它拥有一个无比强大的Terminal，什么事一行命令就可以搞定。</p>
+<h4 id="神器Homebrew"><a href="#神器Homebrew" class="headerlink" title="神器Homebrew"></a>神器Homebrew</h4><p><a href="https://brew.sh" target="_blank" rel="noopener">Homebrew</a>是mac下的头牌神器了，要装什么一行”brew install”就可以搞定。把它当作Ubuntu下的”apt install”就好了。<br><a href="https://brew.sh" target="_blank" rel="noopener">Homebrew</a></p>
+<h4 id="安装Java-JDK-1-8-并配置好环境变量"><a href="#安装Java-JDK-1-8-并配置好环境变量" class="headerlink" title="安装Java JDK 1.8, 并配置好环境变量"></a>安装Java JDK 1.8, 并配置好环境变量</h4><p>下载地址：<a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener">JDK8</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~ vim .zshrc</span><br></pre></td></tr></table></figure>
+<p> 在行末加上<br> <figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=<span class="string">"/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home"</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="string">"<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span>"</span></span><br></pre></td></tr></table></figure><br><code>:wq</code>后<code>source ~/.zsh</code><br>在Terminal中输入<code>java -version</code>查看安装结果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">java version <span class="string">"1.8.0_201"</span></span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_201-b09)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.201-b09, mixed mode)</span><br></pre></td></tr></table></figure>
+<h4 id="安装Scala"><a href="#安装Scala" class="headerlink" title="安装Scala"></a>安装Scala</h4><p>使用<code>brew install scala</code>安装Scala</p>
+<h3 id="安装Spark"><a href="#安装Spark" class="headerlink" title="安装Spark"></a>安装Spark</h3><p>使用<code>brew install apache-spark</code>安装Spark<br>配置Spark</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Spark的配置</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> SPARK_PATH=<span class="string">"/usr/local/Cellar/apache-spark/2.4.0"</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="string">"<span class="variable">$SPARK_PATH</span>/bin:<span class="variable">$PATH</span>"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="运行Spark"><a href="#运行Spark" class="headerlink" title="运行Spark"></a>运行Spark</h2><p>在Terminal中输入<code>spark-shell</code>将得到如下信息<br><img src="mac%E4%B8%8BSpark%E7%9A%84%E5%AE%89%E8%A3%85/1.png" alt="SparkInfo"></p>
+<h2 id="练练手"><a href="#练练手" class="headerlink" title="练练手"></a>练练手</h2><h3 id="使用spark-shell完成单词统计功能"><a href="#使用spark-shell完成单词统计功能" class="headerlink" title="使用spark-shell完成单词统计功能"></a>使用spark-shell完成单词统计功能</h3><p>先随便找一篇文章<br><img src="mac%E4%B8%8BSpark%E7%9A%84%E5%AE%89%E8%A3%85/2.png" alt="text"><br>保存在<code>/Users/xxx/Desktop/Chapter_1.txt</code><br>输入命令<code>spark-shell</code>进入scala编写环境<br>建立一个RDD</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> textFile = sc.textFile(<span class="string">"file:///Users/xxx/Desktop/Chapter_1.txt"</span>)</span><br><span class="line">textFile: org.apache.spark.rdd.<span class="type">RDD</span>[<span class="type">String</span>] = file:<span class="comment">///Users/xxx/Desktop/Chapter_1.txt MapPartitionsRDD[1] at textFile at &lt;console&gt;:24</span></span><br></pre></td></tr></table></figure>
+<p>代码中通过<code>file://</code>前缀指定读取本地文件</p>
+<h4 id="count-操作"><a href="#count-操作" class="headerlink" title="count()操作"></a>count()操作</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; textFile.count()     <span class="comment">// RDD 中的 item 数量，对于文本文件，就是总行数</span></span><br><span class="line">res0: <span class="type">Long</span> = <span class="number">183</span></span><br></pre></td></tr></table></figure>
+<h4 id="first-操作"><a href="#first-操作" class="headerlink" title="first()操作"></a>first()操作</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; textFile.first()     <span class="comment">// RDD 中的第一个 item，对于文本文件，就是第一行内容</span></span><br><span class="line">res1: <span class="type">String</span> = <span class="type">Then</span> wear the gold hat, <span class="keyword">if</span> that will move her;</span><br></pre></td></tr></table></figure>
+<h4 id="通过-filter-transformation-来返回一个新的-RDD"><a href="#通过-filter-transformation-来返回一个新的-RDD" class="headerlink" title="通过 filter transformation 来返回一个新的 RDD"></a>通过 filter transformation 来返回一个新的 RDD</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> linesWithGatsby = textFile.filter(line =&gt; line.contains(<span class="string">"Gatsby"</span>))   <span class="comment">// 筛选出包含 Gatsby 的行</span></span><br><span class="line">linesWithGatsby: org.apache.spark.rdd.<span class="type">RDD</span>[<span class="type">String</span>] = <span class="type">MapPartitionsRDD</span>[<span class="number">5</span>] at filter at &lt;console&gt;:<span class="number">25</span></span><br><span class="line"></span><br><span class="line">scala&gt; linesWithGatsby.count()     <span class="comment">// 统计行数</span></span><br><span class="line">res2: <span class="type">Long</span> = <span class="number">8</span></span><br></pre></td></tr></table></figure>
+<p>寻找包含单词最多的那一行内容共有几个单词</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; textFile.map(line =&gt; line.split(<span class="string">" "</span>).size).reduce((a, b) =&gt; <span class="keyword">if</span> (a &gt; b) a <span class="keyword">else</span> b)</span><br><span class="line">res3: <span class="type">Int</span> = <span class="number">203</span></span><br></pre></td></tr></table></figure>
+<p>代码首先将每一行内容 map 为一个整数，这将创建一个新的 RDD，并在这个 RDD 中执行 reduce 操作，找到最大的数。map()、reduce() 中的参数是 Scala 的函数字面量（function literals，也称为闭包 closures），并且可以使用语言特征或 Scala/Java 的库。例如，通过使用 Math.max() 函数（需要导入 Java 的 Math 库），可以使上述代码更容易理解:</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">import</span> java.lang.<span class="type">Math</span> <span class="comment">//先导入Math函数</span></span><br><span class="line"><span class="keyword">import</span> java.lang.<span class="type">Math</span></span><br><span class="line"></span><br><span class="line">scala&gt; textFile.map(line =&gt; line.split(<span class="string">" "</span>).size).reduce((a, b) =&gt; <span class="type">Math</span>.max(a, b))</span><br><span class="line">res4: <span class="type">Int</span> = <span class="number">203</span></span><br></pre></td></tr></table></figure>
+<p>Hadoop MapReduce 是常见的数据流模式，在 Spark 中同样可以实现（下面这个例子也就是 WordCount）:</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> wordCounts = textFile.flatMap(line =&gt; line.split(<span class="string">" "</span>)).map(word =&gt; (word, <span class="number">1</span>)).reduceByKey((a, b) =&gt; a + b)   <span class="comment">// 实现单词统计</span></span><br><span class="line">wordCounts: org.apache.spark.rdd.<span class="type">RDD</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = <span class="type">ShuffledRDD</span>[<span class="number">10</span>] at reduceByKey at &lt;console&gt;:<span class="number">26</span></span><br><span class="line"></span><br><span class="line">scala&gt; wordCounts.collect()    <span class="comment">// 输出单词统计结果</span></span><br><span class="line">res5: <span class="type">Array</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = <span class="type">Array</span>((paper,<span class="number">1</span>), (consoling,<span class="number">1</span>), (opening,<span class="number">1</span>), (month,,<span class="number">1</span>), (tone.,<span class="number">1</span>), (pleasant,<span class="number">2</span>), (national,<span class="number">1</span>), (wasn<span class="symbol">'t</span>,<span class="number">3</span>), (been,<span class="number">14</span>), (advice,<span class="number">1</span>), (reserve,<span class="number">1</span>), (you!<span class="string">",1), (breath,1), ("</span><span class="type">Whenever</span>,<span class="number">1</span>), (war.<span class="string">",1), (specimen,1), (knows,1), (substitute,1), (husky,1), (wind.,1), (afterward,1), (garages,,1), (instinct,1), (are,9), (revelations,1), (Western,1), (politician,,1), (shut,1), (alert,1), (porch.,2), (telephone,,1), (murmuring,1), (hear.,1), (we're,2), (away,3), (Nordics.,1), ("</span><span class="type">Don</span><span class="symbol">'t</span>,<span class="number">3</span>), (minute,<span class="number">3</span>), (high-bouncing,<span class="number">1</span>), (<span class="string">"Wake,1), (car,1), (dust,1), (going,6), (neighbor's,2), (a--of,1), (complacency,,1), (tangible,1), (Nick?,1), (them,7), (infinite,1), ("</span><span class="type">Sophisticated</span>--<span class="type">God</span>,,<span class="number">1</span>), (recently,<span class="number">1</span>), (to?<span class="string">",1), (Tom,"</span>,<span class="number">1</span>), (lived,<span class="number">1</span>), (air.,<span class="number">2</span>), (blew,<span class="number">3</span>), (again.,<span class="number">4</span>), (promises,<span class="number">1</span>), (ecstat...</span><br></pre></td></tr></table></figure>
+<p>上述便是一些简单的单词统计的应用。</p>
+<h4 id="退出"><a href="#退出" class="headerlink" title="退出"></a>退出</h4><p>输入<code>:quit</code>即可退出</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总体来说，mac安装Spark还是很愉快的，还有许多尚未了解的东西，一点一点的啃掉吧！</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>学习过程中参照了这位<a href="http://codingxiaxw.cn/2016/12/07/60-mac-spark/" target="_blank" rel="noopener">大佬的blog</a>安装过程有稍许不同。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Spark/" rel="tag"># Spark</a>
+              <a href="/tags/scala/" rel="tag"># scala</a>
+              <a href="/tags/macOS/" rel="tag"># macOS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/03/22/Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/" rel="prev" title="Arch Linux 安装笔记">
+      <i class="fa fa-chevron-left"></i> Arch Linux 安装笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/03/24/%E7%88%AC%E8%99%AB%E6%8A%93%E5%8F%96%E8%AF%81%E5%88%B8%E6%97%B6%E6%8A%A5%E5%86%85%E5%AE%B9/" rel="next" title="爬虫抓取证券时报内容">
+      爬虫抓取证券时报内容 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark的安装"><span class="nav-number">1.</span> <span class="nav-text">Spark的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">1.1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#神器Homebrew"><span class="nav-number">1.1.1.</span> <span class="nav-text">神器Homebrew</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Java-JDK-1-8-并配置好环境变量"><span class="nav-number">1.1.2.</span> <span class="nav-text">安装Java JDK 1.8, 并配置好环境变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Scala"><span class="nav-number">1.1.3.</span> <span class="nav-text">安装Scala</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Spark"><span class="nav-number">1.2.</span> <span class="nav-text">安装Spark</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行Spark"><span class="nav-number">2.</span> <span class="nav-text">运行Spark</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练练手"><span class="nav-number">3.</span> <span class="nav-text">练练手</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用spark-shell完成单词统计功能"><span class="nav-number">3.1.</span> <span class="nav-text">使用spark-shell完成单词统计功能</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#count-操作"><span class="nav-number">3.1.1.</span> <span class="nav-text">count()操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#first-操作"><span class="nav-number">3.1.2.</span> <span class="nav-text">first()操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过-filter-transformation-来返回一个新的-RDD"><span class="nav-number">3.1.3.</span> <span class="nav-text">通过 filter transformation 来返回一个新的 RDD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#退出"><span class="nav-number">3.1.4.</span> <span class="nav-text">退出</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jacky Zhang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:JackyBrain@outlook.com" title="E-Mail → mailto:JackyBrain@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jacky</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.1
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'fd0c2da15420e68efc55',
+      clientSecret: '19b67a1ecac899320e2ef0d40f4349ad0560798e',
+      repo        : 'JackyBrainComments',
+      owner       : 'JackyBrain',
+      admin       : ['JackyBrain'],
+      id          : 'cafec9714659ace37fec68c09678ae2b',
+        language: '',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
