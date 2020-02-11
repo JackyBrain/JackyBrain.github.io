@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>An easier way to post</title>
+      <link href="/2020/02/10/An-easier-way-to-post/"/>
+      <url>/2020/02/10/An-easier-way-to-post/</url>
+      
+        <content type="html"><![CDATA[<p>When I have a new idea, the fastest way to post on the website is:<br>Open VSCODE -&gt; hexo new -&gt; Writing -&gt; hexo generator -d<br>It’s complex and not efficient enough. I’m developing a new and more efficient post method.<br>The initial idea is using scheduled script in my mac, execute it every 5 min (a suitable duration). By iCloud sync service, sync my file in the source folder.<br>In this situation, I just need to update the markdown file, the rest missions are for the script.</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>First Post</title>
+      <link href="/2020/02/10/First-Post/"/>
+      <url>/2020/02/10/First-Post/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to my website. I will post some notes or thinking sparks on this website.<br>Today is Feb 02, 2020.<br>I am in Madison, WI, United State.</p><p>This semester I have five class. They are MATH 542, MATH 704, MATH 715, MATH 801 and STAT 615. It is a challenge for me, hope to learn them as best as I can.</p><p>I am looking for the chance to do some research this summer vacation.</p><p>I am interested in Applied Math, Machine Learning and Artificial Intelligence. Generally, I am interested the combination of Math and Computer Science. That’s the future, like Auto-polit, in my opinion.</p><p>Be a better man everyday!</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
+</search>
