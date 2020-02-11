@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jackybrain.github.io","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="以前需要Linux环境时，mac上能干直接mac，mac不行就Ubuntu。久闻ArchLinux大名，今天就学习一下。 下载iso镜像在宿舍是教育网，    南大镜像站、清华镜像站都很快。这里我在清华镜像站下的最新版archlinux。以后会专门写一篇介绍各大镜像站的使用方法。 开始安装 不像Ubuntu，Parallels没有Arch Linux选项，这里我选择了Other Linux 3.x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Arch Linux 安装笔记">
+<meta property="og:url" content="https://jackybrain.github.io/2019/03/22/Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="JackyBrain">
+<meta property="og:description" content="以前需要Linux环境时，mac上能干直接mac，mac不行就Ubuntu。久闻ArchLinux大名，今天就学习一下。 下载iso镜像在宿舍是教育网，    南大镜像站、清华镜像站都很快。这里我在清华镜像站下的最新版archlinux。以后会专门写一篇介绍各大镜像站的使用方法。 开始安装 不像Ubuntu，Parallels没有Arch Linux选项，这里我选择了Other Linux 3.x">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://jackybrain.github.io/2019/03/22/Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/1.png">
+<meta property="og:image" content="https://jackybrain.github.io/2019/03/22/Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/2.png">
+<meta property="og:image" content="https://jackybrain.github.io/2019/03/22/Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/3.png">
+<meta property="og:image" content="https://jackybrain.github.io/2019/03/22/Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/4.png">
+<meta property="og:image" content="https://jackybrain.github.io/2019/03/22/Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/5.png">
+<meta property="og:image" content="https://jackybrain.github.io/2019/03/22/Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/6.png">
+<meta property="article:published_time" content="2019-03-22T18:02:58.000Z">
+<meta property="article:modified_time" content="2019-03-22T08:16:51.934Z">
+<meta property="article:author" content="Jacky Zhang">
+<meta property="article:tag" content="ArchLinux">
+<meta property="article:tag" content="Notes">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jackybrain.github.io/2019/03/22/Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/1.png">
+
+<link rel="canonical" href="https://jackybrain.github.io/2019/03/22/Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Arch Linux 安装笔记 | JackyBrain</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JackyBrain</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">2</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">1</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">3</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jackybrain.github.io/2019/03/22/Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jacky Zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackyBrain">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Arch Linux 安装笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-03-22 13:02:58 / Modified: 03:16:51" itemprop="dateCreated datePublished" datetime="2019-03-22T13:02:58-05:00">2019-03-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>以前需要Linux环境时，mac上能干直接mac，mac不行就Ubuntu。久闻ArchLinux大名，今天就学习一下。</p>
+<h3 id="下载iso镜像"><a href="#下载iso镜像" class="headerlink" title="下载iso镜像"></a>下载iso镜像</h3><p>在宿舍是教育网，    <a href="http://mirrors.nju.edu.cn" target="_blank" rel="noopener">南大镜像站</a>、<a href="https://mirrors.tuna.tsinghua.edu.cn" target="_blank" rel="noopener">清华镜像站</a>都很快。这里我在清华镜像站下的最新版archlinux。<br>以后会专门写一篇介绍各大镜像站的使用方法。</p>
+<h3 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h3><!-- ![你想输入的替代文字](Arch-Linux-安装笔记/1.png) -->
+<p>不像Ubuntu，Parallels没有Arch Linux选项，这里我选择了<strong>Other Linux 3.x kernel 64-bit</strong>，默认的配置应该足够了。</p>
+<a id="more"></a>
+<h4 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h4><p>选择第一项<img src="Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/1.png" alt="step1"></p>
+<h5 id="开始分区"><a href="#开始分区" class="headerlink" title="开始分区"></a>开始分区</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># fdisk /dev/sda</span></span><br></pre></td></tr></table></figure>
+<h5 id="创建分区表"><a href="#创建分区表" class="headerlink" title="创建分区表"></a>创建分区表</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Command (m for help): n</span></span><br><span class="line"><span class="comment"># Partition type: Select (default p):</span></span><br><span class="line"><span class="comment"># Partition number (1-4, default 1):</span></span><br><span class="line"><span class="comment"># First sector (2048-209715199, default 2048):</span></span><br><span class="line"><span class="comment"># Last sector, +sectors or +size&#123;K,M,G&#125; (2048-209715199....., default 209715199): +15G</span></span><br></pre></td></tr></table></figure>
+
+<p>建立第二个分区:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Command (m for help): n</span></span><br><span class="line"><span class="comment"># Partition type: Select (default p):</span></span><br><span class="line"><span class="comment"># Partition number (1-4, default 2):</span></span><br><span class="line"><span class="comment"># First sector (31459328-209715199, default 31459328):</span></span><br><span class="line"><span class="comment"># Last sector, +sectors or +size&#123;K,M,G&#125; (31459328-209715199....., default 209715199):</span></span><br></pre></td></tr></table></figure>
+<p>现在预览下分区表:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Command (m for help): p</span></span><br></pre></td></tr></table></figure>
+<p>向磁盘写入这些改动:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Command (m for help): w</span></span><br></pre></td></tr></table></figure>
+<p>程序将显示如下信息:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The partition table has been altered!</span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line">Syncing disks.</span><br></pre></td></tr></table></figure>
+<h4 id="安装基本系统"><a href="#安装基本系统" class="headerlink" title="安装基本系统"></a>安装基本系统</h4><p>这一步需要联网</p>
+<h5 id="检测网络状态"><a href="#检测网络状态" class="headerlink" title="检测网络状态"></a>检测网络状态</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ping baidu.com</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="用nano命令将清华源加在最前面"><a href="#用nano命令将清华源加在最前面" class="headerlink" title="用nano命令将清华源加在最前面"></a>用nano命令将清华源加在最前面</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># nano /etc/pacman.d/mirrorlist</span></span><br></pre></td></tr></table></figure>
+<p><img src="Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/2.png" alt="mirrors"></p>
+<h5 id="刷新列表-安装基本系统"><a href="#刷新列表-安装基本系统" class="headerlink" title="刷新列表, 安装基本系统"></a>刷新列表, 安装基本系统</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pacman -Syy</span></span><br><span class="line"><span class="comment"># pacstrap -i /mnt base</span></span><br><span class="line"></span><br><span class="line">Enter a selection (default-all):</span><br><span class="line">Enter a number (default=1):</span><br><span class="line">:: Proceed with installation? [Y/n] Y</span><br></pre></td></tr></table></figure>
+<h5 id="生成fstab分区表"><a href="#生成fstab分区表" class="headerlink" title="生成fstab分区表"></a>生成fstab分区表</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># genfstab -U -p /mnt &gt;&gt; /mnt/etc/fstab</span></span><br></pre></td></tr></table></figure>
+<h5 id="chroot-到新系统开始配置"><a href="#chroot-到新系统开始配置" class="headerlink" title="chroot 到新系统开始配置"></a>chroot 到新系统开始配置</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># arch-chroot /mnt /bin/bash</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="系统本地化，设置本地语言，地点等信息"><a href="#系统本地化，设置本地语言，地点等信息" class="headerlink" title="系统本地化，设置本地语言，地点等信息"></a>系统本地化，设置本地语言，地点等信息</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># nano /etc/locale.gen</span></span><br><span class="line">en_US.UTF-8 UTF-8</span><br><span class="line">zh_CN.UTF-8 UTF-8</span><br><span class="line">zh_TW.UTF-8 UTF-8</span><br></pre></td></tr></table></figure>
+<h6 id="接着执行locale-gen以生成locale讯息"><a href="#接着执行locale-gen以生成locale讯息" class="headerlink" title="接着执行locale-gen以生成locale讯息"></a>接着执行locale-gen以生成locale讯息</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># locale-gen</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="创建-locale-conf-并提交本地化选项"><a href="#创建-locale-conf-并提交本地化选项" class="headerlink" title="创建 locale.conf 并提交本地化选项"></a>创建 locale.conf 并提交本地化选项</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># echo LANG=en_US.UTF-8 &gt; /etc/locale.conf</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="设置时区"><a href="#设置时区" class="headerlink" title="设置时区"></a>设置时区</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="设置时间"><a href="#设置时间" class="headerlink" title="设置时间"></a>设置时间</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># hwclock --systohc --utc</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="设置主机名"><a href="#设置主机名" class="headerlink" title="设置主机名"></a>设置主机名</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># echo 主机名 &gt; /etc/hostname</span></span><br><span class="line"><span class="comment"># nano /etc/hosts</span></span><br><span class="line"><span class="comment">#&lt;ip-address&gt; &lt;hostname.domain.org&gt; &lt;hostname&gt;</span></span><br><span class="line">127.0.0.1    localhost.localdomain  localhost 主机名  </span><br><span class="line">::1          localhost.localdomain  localhost</span><br></pre></td></tr></table></figure>
+
+<h6 id="设置root密码"><a href="#设置root密码" class="headerlink" title="设置root密码"></a>设置root密码</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># passwd</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="安装启动引导器grub"><a href="#安装启动引导器grub" class="headerlink" title="安装启动引导器grub"></a>安装启动引导器grub</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pacman -S grub</span></span><br><span class="line"><span class="comment"># grub-install --target=i386-pc --recheck /dev/sda</span></span><br><span class="line"><span class="comment"># grub-mkconfig -o /boot/grub/grub.cfg</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="离开-chroot-环境"><a href="#离开-chroot-环境" class="headerlink" title="离开 chroot 环境"></a>离开 chroot 环境</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># exit</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="重启计算机"><a href="#重启计算机" class="headerlink" title="重启计算机"></a>重启计算机</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># reboot</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="安装图形界面"><a href="#安装图形界面" class="headerlink" title="安装图形界面"></a>安装图形界面</h4><p>使用root登入</p>
+<h5 id="设置联网"><a href="#设置联网" class="headerlink" title="设置联网"></a>设置联网</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip link</span><br></pre></td></tr></table></figure>
+<p>找到网络设备, e.g. <strong>enp0s5</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ip link set enp0s3 up</span></span><br><span class="line"><span class="comment"># dhcpcd enp0s3</span></span><br><span class="line"><span class="comment"># systemctl enable dhcpcd@enp0s3.service</span></span><br></pre></td></tr></table></figure>
+<p>这样使得设备自动联网</p>
+<h5 id="更新软件包"><a href="#更新软件包" class="headerlink" title="更新软件包"></a>更新软件包</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pacman -Syu</span></span><br></pre></td></tr></table></figure>
+<h5 id="安装xorg"><a href="#安装xorg" class="headerlink" title="安装xorg"></a>安装xorg</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pacman -S xorg</span></span><br></pre></td></tr></table></figure>
+<p>一路默认</p>
+<h5 id="安装驱动"><a href="#安装驱动" class="headerlink" title="安装驱动"></a>安装驱动</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pcaman -S xf86-video-vesa  虚拟机显卡驱动</span></span><br><span class="line"><span class="comment"># pacman -S alsa-utils 声卡驱动</span></span><br><span class="line"><span class="comment"># pacman -S xfce4 桌面套件</span></span><br><span class="line"><span class="comment"># pacman -S slim 登陆管理器</span></span><br><span class="line"><span class="comment"># pacman -S sudo 安装sudo</span></span><br><span class="line"><span class="comment"># pacman -S wqy-zenhei 安装中文字体</span></span><br><span class="line"><span class="comment"># useradd -m -s /bin/bash arch 添加一个普通用户"arch"</span></span><br><span class="line"><span class="comment"># passwd arch 设定密码</span></span><br><span class="line"><span class="comment"># visudo 为刚才添加的普通用户添加sudo的相关权限</span></span><br></pre></td></tr></table></figure>
+<p><img src="Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/3.png" alt="adduser1"><br><img src="Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/4.png" alt="adduser2"><br>使用的是vi，自行查看vi的操作方法。<br>修改完:wq<br>新建.xinitrc</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#touch ~/.xinitrc</span></span><br></pre></td></tr></table></figure>
+<p>内容如下<br><img src="Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/5.png" alt="xinitrc"><br>添加执行权限<br>设置自动启动slim登陆器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sudo chmod +x ~/.xinitrc</span></span><br><span class="line"><span class="comment"># sudo systemctl enable slim.service</span></span><br></pre></td></tr></table></figure>
+<p>然后reboot</p>
+<h4 id="进入图形化界面"><a href="#进入图形化界面" class="headerlink" title="进入图形化界面"></a>进入图形化界面</h4><p><img src="Arch-Linux-%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/6.png" alt="GraphicalInterface"></p>
+<h3 id="基本工作完成"><a href="#基本工作完成" class="headerlink" title="基本工作完成"></a>基本工作完成</h3><h3 id="一些想法"><a href="#一些想法" class="headerlink" title="一些想法"></a>一些想法</h3><p>相较于其他自带图形化界面的发行版来说，安装是硬核了点，但是给予了用户更大的自由度。<br>适合喜欢折腾的用户。<br>最后看到图像化界面后感觉还挺爽hhh…</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ArchLinux/" rel="tag"># ArchLinux</a>
+              <a href="/tags/Notes/" rel="tag"># Notes</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/10/First-Post/" rel="next" title="First Post">
+      First Post <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载iso镜像"><span class="nav-number">1.</span> <span class="nav-text">下载iso镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开始安装"><span class="nav-number">2.</span> <span class="nav-text">开始安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分区"><span class="nav-number">2.1.</span> <span class="nav-text">分区</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#开始分区"><span class="nav-number">2.1.1.</span> <span class="nav-text">开始分区</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建分区表"><span class="nav-number">2.1.2.</span> <span class="nav-text">创建分区表</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装基本系统"><span class="nav-number">2.2.</span> <span class="nav-text">安装基本系统</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#检测网络状态"><span class="nav-number">2.2.1.</span> <span class="nav-text">检测网络状态</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#用nano命令将清华源加在最前面"><span class="nav-number">2.2.2.</span> <span class="nav-text">用nano命令将清华源加在最前面</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#刷新列表-安装基本系统"><span class="nav-number">2.2.3.</span> <span class="nav-text">刷新列表, 安装基本系统</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#生成fstab分区表"><span class="nav-number">2.2.4.</span> <span class="nav-text">生成fstab分区表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#chroot-到新系统开始配置"><span class="nav-number">2.2.5.</span> <span class="nav-text">chroot 到新系统开始配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#系统本地化，设置本地语言，地点等信息"><span class="nav-number">2.2.6.</span> <span class="nav-text">系统本地化，设置本地语言，地点等信息</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#接着执行locale-gen以生成locale讯息"><span class="nav-number">2.2.6.1.</span> <span class="nav-text">接着执行locale-gen以生成locale讯息</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#创建-locale-conf-并提交本地化选项"><span class="nav-number">2.2.6.2.</span> <span class="nav-text">创建 locale.conf 并提交本地化选项</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#设置时区"><span class="nav-number">2.2.6.3.</span> <span class="nav-text">设置时区</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#设置时间"><span class="nav-number">2.2.6.4.</span> <span class="nav-text">设置时间</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#设置主机名"><span class="nav-number">2.2.6.5.</span> <span class="nav-text">设置主机名</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#设置root密码"><span class="nav-number">2.2.6.6.</span> <span class="nav-text">设置root密码</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#安装启动引导器grub"><span class="nav-number">2.2.6.7.</span> <span class="nav-text">安装启动引导器grub</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#离开-chroot-环境"><span class="nav-number">2.2.6.8.</span> <span class="nav-text">离开 chroot 环境</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#重启计算机"><span class="nav-number">2.2.6.9.</span> <span class="nav-text">重启计算机</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装图形界面"><span class="nav-number">2.3.</span> <span class="nav-text">安装图形界面</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#设置联网"><span class="nav-number">2.3.1.</span> <span class="nav-text">设置联网</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#更新软件包"><span class="nav-number">2.3.2.</span> <span class="nav-text">更新软件包</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装xorg"><span class="nav-number">2.3.3.</span> <span class="nav-text">安装xorg</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装驱动"><span class="nav-number">2.3.4.</span> <span class="nav-text">安装驱动</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进入图形化界面"><span class="nav-number">2.4.</span> <span class="nav-text">进入图形化界面</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本工作完成"><span class="nav-number">3.</span> <span class="nav-text">基本工作完成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些想法"><span class="nav-number">4.</span> <span class="nav-text">一些想法</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jacky Zhang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:JackyBrain@outlook.com" title="E-Mail → mailto:JackyBrain@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jacky</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.1
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'fd0c2da15420e68efc55',
+      clientSecret: '19b67a1ecac899320e2ef0d40f4349ad0560798e',
+      repo        : 'JackyBrainComments',
+      owner       : 'JackyBrain',
+      admin       : ['JackyBrain'],
+      id          : '3c071d9b3ee366258f649335ce1a00f8',
+        language: '',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
